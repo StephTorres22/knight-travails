@@ -1,0 +1,20 @@
+:root{
+    box-sizing: border-box;
+}
+
+.chessSquare {
+  width: 7rem;
+  height: 7rem;
+  border: solid 2px black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.board {
+  border: solid 5px pink;
+  width: fit-content;
+  height: fit-content;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+}
