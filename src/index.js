@@ -18,16 +18,25 @@ import "./styles.css";
 
 const boardDiv = document.querySelector(".board");
 
+const chessBoard = create2DBoardArray(8);
 function makeGrid() {
-  chessBoard.forEach((row) => {
+  for (let i = 0; i < chessBoard.length; i++) {
+    let row = chessBoard[i];
     row.forEach((coordinate) => {
       let square = document.createElement("div");
       boardDiv.appendChild(square);
       square.classList.add("chessSquare");
       square.innerText = coordinate;
+      if (i% 2 == 0) {
+        square.setAttribute("data-even", true);
+      } else {
+        square.setAttribute("data-even", false);
+      }
     });
-  });
+   
+  }
 }
+
 
 function create2DBoardArray(num) {
   let board = new Array(num);
@@ -42,10 +51,12 @@ function create2DBoardArray(num) {
   return board;
 }
 
-const chessBoard = create2DBoardArray(8);
 console.log(chessBoard);
 
-const ticTacToeBoard = create2DBoardArray(3);
-console.log(ticTacToeBoard);
-console.log(boardDiv);
+/* function assignDataForEachRow(){
+    for (let i = 0; i<chessBoard.length; i++){
+
+    }
+} */
+
 makeGrid();

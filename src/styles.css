@@ -1,5 +1,5 @@
-:root{
-    box-sizing: border-box;
+:root {
+  box-sizing: border-box;
 }
 
 .chessSquare {
@@ -17,4 +17,11 @@
   height: fit-content;
   display: grid;
   grid-template-columns: repeat(8, 1fr);
+}
+.chessSquare[data-even="true"]:nth-child(odd) {
+  background: pink;
+}
+
+.chessSquare[data-even="false"]:nth-child(even) {
+  background-color: pink;
 }
