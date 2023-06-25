@@ -75,3 +75,4 @@ console.log(chessBoard);
 makeGrid(chessBoard);
 const test = new Knight();
 window.test = test;
+window.chessBoard = chessBoard;
