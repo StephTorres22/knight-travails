@@ -16,12 +16,51 @@ export class Knight {
     ];
 
     let randomPostion = Math.floor(Math.random() * possibleStart.length);
-    possibleStart[randomPostion].visited = true;
+    //possibleStart[randomPostion].visited = true;
     return possibleStart[randomPostion];
   }
 
+  potentialTour(x = this.start.x, y = this.start.y) {
+    //possibleMove = [];
+    if (
+      x < 0 ||
+      y < 0 ||
+      x > chessBoard.length - 1 ||
+      y > chessBoard.length - 1
+    ) {
+      //console.log(x, y);
+      return null;
+    }
+    /* if (chessBoard[x][y].visited) {
+      return;
+    } */
+    let potentialMove;
+    for (let i = 0; i < chessBoard.length; i++) {
+      let row = chessBoard[i];
+      for (let j = 0; j < row.length; j++) {
+        if (!chessBoard[x][y].visited) {
+          console.log(x, y);
+
+          chessBoard[x][y].visited = true;
+          potentialMove = new Node(
+            chessBoard[x][y],
+            this.potentialTour(x + 1, y + 2), //rightDown
+            this.potentialTour(x + 2, y + 1), //downRight
+            this.potentialTour(x + 2, y - 1), //rightUp
+            this.potentialTour(x + 1, y - 2), //upRight,
+            this.potentialTour(x - 1, y - 2), //upLeft
+            this.potentialTour(x - 2, y - 1), //letfUp
+            this.potentialTour(x - 2, y + 1), //leftDown
+            this.potentialTour(x - 1, y + 2) //downLeft
+          );
+        }
+      }
+    }
+    //console.log(potentialMove);
+    return potentialMove;
+  }
   /* get this to half work, but hit stack overflow when I add the new ones */
-  possibleMoves(board = chessBoard, x = this.start.x, y = this.start.y) {
+  /* possibleMoves(board = chessBoard, x = this.start.x, y = this.start.y) {
     if (x < 0 || y < 0 || x > board.length - 1 || y > board.length - 1) {
       return null;
     }
@@ -32,23 +71,22 @@ export class Knight {
       this.possibleMoves(chessBoard, x + 1, y + 2), //rightDown
       this.possibleMoves(chessBoard, x + 2, y + 1), //downRight
       this.possibleMoves(chessBoard, x + 2, y - 1), //rightUp
-      this.possibleMoves(chessBoard, x + 1, y - 2) //upRight,
-      /*this.possibleMoves(chessBoard, x - 1, y - 2), //upLeft
-      this.possibleMoves(chessBoard, x - 2, y - 1), //letfUp
+      this.possibleMoves(chessBoard, x + 1, y - 2), //upRight,
+      //this.possibleMoves(chessBoard, x - 1, y - 2), //upLeft
+      //this.possibleMoves(chessBoard, x - 2, y - 1), //letfUp
       this.possibleMoves(chessBoard, x - 2, y + 1), //leftDown
-      this.possibleMoves(chessBoard, x - 1, y + 2) //downLeft  */
+      /*this.possibleMoves(chessBoard, x - 1, y + 2) //downLeft  
     );
 
     console.log(potentialMove);
 
     return potentialMove;
-  }
+  } */
 }
 
 class Node {
   constructor(
-    x,
-    y,
+    square,
     leftUp,
     upLeft,
     upRight,
@@ -58,8 +96,7 @@ class Node {
     downLeft,
     leftDown
   ) {
-    this.x = x;
-    this.y = y;
+    this.square = square;
     this.leftUp = leftUp;
     this.upLeft = upLeft;
     this.upRight = upRight;
