@@ -77,9 +77,10 @@ function create2DBoardArray(num) {
   return board;
 }
 
-class Knight {
+export class Knight {
   constructor(board) {
-    this.startPosition = this.randomStart(board);
+    this.startPosition = board[4][3];
+    //this.#randomStart(board);
     this.currentPosition;
     this.moves = [
       [1, 2],
@@ -93,7 +94,7 @@ class Knight {
     ];
   }
 
-  randomStart(board) {
+  #randomStart(board) {
     Math.floor(Math.random() * board.length);
 
     let position =
@@ -105,7 +106,7 @@ class Knight {
 
   /* this gets the shorted path, but need to look at how to back track. also had to have a little look online, wouldn't have thought of using two while loops.
     still a couple of mistakes... regarding the visited state. */
-  shortestPath(end, arr = this.moves) {
+  shortestPath(end = [0, 0], arr = this.moves) {
     let queue = [];
     queue.push(new Node(this.startPosition.x, this.startPosition.y));
     let steps = 0;
@@ -117,13 +118,14 @@ class Knight {
 
       while (queue.length) {
         let current = queue[0];
+
         if (current.x === end[0] && current.y === end[1]) {
-          //path.push(end);
+          //path.push(end)
+          //use this to get the last node, but there is probably a better way, logs node, don't want that.
           const lastNode = () => {
             let last;
             levels[levels.length - 1].forEach((node) => {
               if (node.x === end[0] && node.y === end[1]) {
-                console.log(node);
                 last = node;
               }
             });
@@ -138,7 +140,19 @@ class Knight {
           path.push([this.startPosition.x, this.startPosition.y]);
           //backtrack..?
 
-          return [steps, path.reverse()];
+          path = path.reverse();
+          console.log(
+            `The number of steps from [${this.startPosition.x}, ${this.startPosition.y}] to [${end}] is ${steps}`
+          );
+
+          displayPath(path);
+
+          //need to reset all of the squares visited to false!
+
+          chessBoard.forEach((row) => {
+            row.forEach((square) => (square.visited = false));
+          });
+          return;
         }
 
         for (let i = 0; i < arr.length; i++) {
@@ -221,7 +235,7 @@ function checkValid(x, y, arr) {
     backtrack(prev, levels, count - 1, steps, arr, path, start);
   }
    */
-function randoPos(board) {
+export function randoPos(board) {
   Math.floor(Math.random() * board.length);
 
   let position =
@@ -231,5 +245,19 @@ function randoPos(board) {
   return [position.x, position.y];
 }
 
+function displayPath(path) {
+  let pathString = `The path is: [${path[0]}]`;
+
+  for (let i = 1; i < path.length; i++) {
+    let pathPortion = `\n => [${path[i]}]`;
+    pathString += pathPortion;
+    //console.log(pathString);
+  }
+
+  console.log(pathString);
+}
+
 const test = new Knight(chessBoard);
-console.log(test.startPosition, test.shortestPath(randoPos(chessBoard)));
+//console.log(test.startPosition);
+test.shortestPath([2, 0]);
+console.log(test.shortestPath([1, 3]));

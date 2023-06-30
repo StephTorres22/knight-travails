@@ -15,7 +15,7 @@ console.log(chessBoardArray); */
 /* new Array() with single parameter creates an array with that number of empty slots, not defined like [ , ,] or undefined items
 need to assign them */
 import "./styles.css";
-import { Knight } from "./knight.js";
+import { Knight, randoPos } from "./knight.js";
 
 const boardDiv = document.querySelector(".board");
 const moves = [];
@@ -74,5 +74,6 @@ console.log(chessBoard);
 
 makeGrid(chessBoard);
 const test = new Knight(chessBoard);
+window.rando = randoPos(chessBoard);
 window.test = test;
 window.chessBoard = chessBoard;
